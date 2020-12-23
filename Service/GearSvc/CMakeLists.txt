@@ -1,14 +1,10 @@
 
 find_package(GEAR REQUIRED)
 
-set(GearSvc_srcs
-    src/GearSvc.cpp
-)
-
 gaudi_add_header_only_library(GearSvc)
 
 gaudi_add_module(GearSvcPlugins
-                 SOURCES ${GearSvc_srcs}
+                 SOURCES src/GearSvc.cpp
                  LINK GearSvc
                       Gaudi::GaudiKernel
                       ${GEAR_LIBRARIES}
