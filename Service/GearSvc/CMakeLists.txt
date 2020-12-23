@@ -1,14 +1,22 @@
-gaudi_subdir(GearSvc v0r0)
 
 find_package(GEAR REQUIRED)
 
 set(GearSvc_srcs
-    src/*.cpp
+    src/GearSvc.cpp
 )
 
-gaudi_install_headers(GearSvc)
+gaudi_add_header_only_library(GearSvc)
 
-gaudi_add_module(GearSvc ${GearSvc_srcs}
-    INCLUDE_DIRS GaudiKernel gear
-    LINK_LIBRARIES GaudiKernel ${GEAR_LIBRARIES}
+gaudi_add_module(GearSvcPlugins
+                 SOURCES ${GearSvc_srcs}
+                 LINK GearSvc
+                      Gaudi::GaudiKernel
+                      ${GEAR_LIBRARIES}
 )
+
+install(TARGETS GearSvc GearSvcPlugins
+  EXPORT CEPCSWTargets
+  RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}" COMPONENT bin
+  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}" COMPONENT shlib
+  COMPONENT dev)
+
